@@ -31,7 +31,7 @@ cmsDriver.py  --eventcontent PREMIXRAW --customise Configuration/DataProcessing/
 # Run generated config
 REPORT_NAME=DIGIPremix_report.xml
 # Run the cmsRun
-cmsRun -e -j $REPORT_NAME DIGIPremix_1_cfg.py || exit $? ;
+exec >/dev/null 2>&1; cmsRun -e -j $REPORT_NAME DIGIPremix_1_cfg.py || exit $? ;
 
 # Parse values from DIGIPremix_report.xml report
 processedEvents=$(grep -Po "(?<=<Metric Name=\"NumberEvents\" Value=\")(.*)(?=\"/>)" $REPORT_NAME | tail -n 1)

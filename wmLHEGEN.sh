@@ -1,5 +1,8 @@
 #!/bin/bash
 
+export HOME=`pwd`
+export EVENTS=$1
+
 # Binds for singularity containers
 # Mount /afs, /eos, /cvmfs, /etc/grid-security for xrootd
 export APPTAINER_BINDPATH='/afs,/cvmfs,/cvmfs/grid.cern.ch/etc/grid-security:/etc/grid-security,/eos,/etc/pki/ca-trust,/run/user,/var/run/user'
@@ -72,15 +75,13 @@ mv ../../Configuration .
 scram b
 cd ../..
 
-export EVENTS=$1
-
 # cmsDriver command
 cmsDriver.py Configuration/GenProduction/python/wmLHEGEN-fragment.py --eventcontent RAWSIM,LHE --customise Configuration/DataProcessing/Utils.addMonitoring --datatier GEN,LHE --conditions 106X_upgrade2018_realistic_v4 --beamspot Realistic25ns13TeVEarly2018Collision --customise_commands process.source.numberEventsInLuminosityBlock="cms.untracked.uint32(100)" --step LHE,GEN --geometry DB:Extended --era Run2_2018 --python_filename wmLHEGEN_cfg.py --fileout file:wmLHEGEN.root --number $EVENTS --number_out $EVENTS --no_exec --mc || exit $? ;
 
 # Run generated config
 REPORT_NAME=wmLHEGEN_report.xml
 # Run the cmsRun
-cmsRun -e -j $REPORT_NAME wmLHEGEN_cfg.py || exit $? ;
+exec >/dev/null 2>&1; cmsRun -e -j $REPORT_NAME wmLHEGEN_cfg.py || exit $? ;
 
 # Parse values from wmLHEGEN_report.xml report
 processedEvents=$(grep -Po "(?<=<Metric Name=\"NumberEvents\" Value=\")(.*)(?=\"/>)" $REPORT_NAME | tail -n 1)

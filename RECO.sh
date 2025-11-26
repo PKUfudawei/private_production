@@ -30,7 +30,7 @@ cmsDriver.py  --eventcontent AODSIM --customise Configuration/DataProcessing/Uti
 # Run generated config
 REPORT_NAME=RECO_report.xml
 # Run the cmsRun
-cmsRun -e -j $REPORT_NAME RECO_1_cfg.py || exit $? ;
+exec >/dev/null 2>&1; cmsRun -e -j $REPORT_NAME RECO_1_cfg.py || exit $? ;
 
 # Parse values from RECO_report.xml report
 processedEvents=$(grep -Po "(?<=<Metric Name=\"NumberEvents\" Value=\")(.*)(?=\"/>)" $REPORT_NAME | tail -n 1)

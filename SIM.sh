@@ -30,7 +30,7 @@ cmsDriver.py  --eventcontent RAWSIM --customise Configuration/DataProcessing/Uti
 # Run generated config
 REPORT_NAME=SIM_report.xml
 # Run the cmsRun
-cmsRun -e -j $REPORT_NAME SIM_1_cfg.py || exit $? ;
+exec >/dev/null 2>&1; cmsRun -e -j $REPORT_NAME SIM_1_cfg.py || exit $? ;
 
 # Parse values from SIM_report.xml report
 processedEvents=$(grep -Po "(?<=<Metric Name=\"NumberEvents\" Value=\")(.*)(?=\"/>)" $REPORT_NAME | tail -n 1)

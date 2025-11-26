@@ -30,7 +30,7 @@ cmsDriver.py  --eventcontent MINIAODSIM --customise Configuration/DataProcessing
 # Run generated config
 REPORT_NAME=MiniAODv2_report.xml
 # Run the cmsRun
-cmsRun -e -j $REPORT_NAME MiniAODv2_1_cfg.py || exit $? ;
+exec >/dev/null 2>&1; cmsRun -e -j $REPORT_NAME MiniAODv2_1_cfg.py || exit $? ;
 
 # Parse values from MiniAODv2_report.xml report
 processedEvents=$(grep -Po "(?<=<Metric Name=\"NumberEvents\" Value=\")(.*)(?=\"/>)" $REPORT_NAME | tail -n 1)
