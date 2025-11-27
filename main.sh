@@ -1,9 +1,9 @@
 #!/bin/bash
 
-source wmLHEGEN.sh $1
-source SIM.sh $1
-source DIGIPremix.sh $1
-source HLT.sh $1
-source RECO.sh $1
-source MiniAODv2.sh $1
-source customizedNanoAOD.sh $1
+./wmLHEGEN.sh $1
+./SIM.sh
+./DIGIPremix.sh
+./HLT.sh
+./RECO.sh
+./MiniAODv2.sh
+./customizedNanoAOD.sh

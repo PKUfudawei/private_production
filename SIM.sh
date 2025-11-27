@@ -54,7 +54,7 @@ if [ -z "$totalSize" ]; then
   totalSize=$totalSizeAlt
 fi
 if [ -z "$processedEvents" ]; then
-  processedEvents=$EVENTS
+  processedEvents=-1
 fi
 echo "Validation report of SIM sequence 1/1"
 echo "Processed events: $processedEvents"
