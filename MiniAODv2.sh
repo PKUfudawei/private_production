@@ -4,7 +4,6 @@
 # Mount /afs, /eos, /cvmfs, /etc/grid-security for xrootd
 export APPTAINER_BINDPATH='/afs,/cvmfs,/cvmfs/grid.cern.ch/etc/grid-security:/etc/grid-security,/eos,/etc/pki/ca-trust,/run/user,/var/run/user'
 
-
 # Dump actual test code to a MiniAODv2_test.sh file that can be run in Singularity
 cat <<'EndOfTestFile' > MiniAODv2_test.sh
 #!/bin/bash
@@ -25,7 +24,7 @@ scram b
 cd ../..
 
 # cmsDriver command
-cmsDriver.py  --eventcontent MINIAODSIM --customise Configuration/DataProcessing/Utils.addMonitoring --datatier MINIAODSIM --conditions 106X_upgrade2018_realistic_v16_L1v1 --step PAT --procModifiers run2_miniAOD_UL --geometry DB:Extended --era Run2_2018 --python_filename MiniAODv2_1_cfg.py --fileout file:MiniAODv2.root --filein file:RECO.root --number $EVENTS --number_out $EVENTS --runUnscheduled --no_exec --mc || exit $? ;
+cmsDriver.py  --eventcontent MINIAODSIM --customise Configuration/DataProcessing/Utils.addMonitoring --datatier MINIAODSIM --conditions 106X_upgrade2018_realistic_v16_L1v1 --step PAT --procModifiers run2_miniAOD_UL --geometry DB:Extended --era Run2_2018 --python_filename MiniAODv2_1_cfg.py --fileout file:MiniAODv2.root --filein file:RECO.root --number -1 --number_out -1 --runUnscheduled --no_exec --mc || exit $? ;
 
 # Run generated config
 REPORT_NAME=MiniAODv2_report.xml

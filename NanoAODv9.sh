@@ -4,7 +4,6 @@
 # Mount /afs, /eos, /cvmfs, /etc/grid-security for xrootd
 export APPTAINER_BINDPATH='/afs,/cvmfs,/cvmfs/grid.cern.ch/etc/grid-security:/etc/grid-security,/eos,/etc/pki/ca-trust,/run/user,/var/run/user'
 
-
 # Dump actual test code to a NanoAODv9_test.sh file that can be run in Singularity
 cat <<'EndOfTestFile' > NanoAODv9_test.sh
 #!/bin/bash
@@ -25,7 +24,7 @@ scram b
 cd ../..
 
 # cmsDriver command
-cmsDriver.py  --eventcontent NANOAODSIM --customise Configuration/DataProcessing/Utils.addMonitoring --datatier NANOAODSIM --conditions 106X_upgrade2018_realistic_v16_L1v1 --step NANO --era Run2_2018,run2_nanoAOD_106Xv2 --python_filename NanoAODv9_1_cfg.py --fileout file:NanoAODv9.root --filein file:MiniAODv2.root --number $EVENTS --number_out $EVENTS --no_exec --mc || exit $? ;
+cmsDriver.py  --eventcontent NANOAODSIM --customise Configuration/DataProcessing/Utils.addMonitoring --datatier NANOAODSIM --conditions 106X_upgrade2018_realistic_v16_L1v1 --step NANO --era Run2_2018,run2_nanoAOD_106Xv2 --python_filename NanoAODv9_1_cfg.py --fileout file:NanoAODv9.root --filein file:MiniAODv2.root --number -1 --number_out -1 --no_exec --mc || exit $? ;
 
 # Run generated config
 REPORT_NAME=NanoAODv9_report.xml
