@@ -3,6 +3,7 @@
 # Binds for singularity containers
 # Mount /afs, /eos, /cvmfs, /etc/grid-security for xrootd
 export APPTAINER_BINDPATH='/afs,/cvmfs,/cvmfs/grid.cern.ch/etc/grid-security:/etc/grid-security,/eos,/etc/pki/ca-trust,/run/user,/var/run/user'
+export EVENTS=$1
 
 # Dump actual test code to a RECO_test.sh file that can be run in Singularity
 cat <<'EndOfTestFile' > RECO_test.sh
@@ -24,7 +25,7 @@ scram b
 cd ../..
 
 # cmsDriver command
-cmsDriver.py  --eventcontent AODSIM --customise Configuration/DataProcessing/Utils.addMonitoring --datatier AODSIM --conditions 106X_upgrade2018_realistic_v11_L1v1 --step RAW2DIGI,L1Reco,RECO,RECOSIM,EI --geometry DB:Extended --era Run2_2018 --python_filename RECO_1_cfg.py --fileout file:RECO.root --filein file:HLT.root --number -1 --number_out -1 --runUnscheduled --no_exec --mc || exit $? ;
+cmsDriver.py  --eventcontent AODSIM --customise Configuration/DataProcessing/Utils.addMonitoring --datatier AODSIM --conditions 106X_upgrade2018_realistic_v11_L1v1 --step RAW2DIGI,L1Reco,RECO,RECOSIM,EI --geometry DB:Extended --era Run2_2018 --python_filename RECO_1_cfg.py --fileout file:RECO.root --filein file:HLT.root --number $EVENTS --number_out $EVENTS --runUnscheduled --no_exec --mc || exit $? ;
 
 # Run generated config
 REPORT_NAME=RECO_report.xml
