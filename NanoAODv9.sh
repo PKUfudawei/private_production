@@ -77,6 +77,7 @@ echo "Filter efficiency fraction: "$(bc -l <<< "scale=10; ($producedEvents) / $p
 EndOfTestFile
 
 # Make file executable
+sed -i "s/\$(echo \$EVENTS_VALUE)/$EVENTS/g" NanoAODv9_test.sh
 chmod +x NanoAODv9_test.sh
 
 if [ -e "/cvmfs/unpacked.cern.ch/registry.hub.docker.com/cmssw/el7:amd64" ]; then
