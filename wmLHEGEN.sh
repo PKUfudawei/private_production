@@ -128,7 +128,7 @@ echo "Filter efficiency fraction: "$(bc -l <<< "scale=10; ($producedEvents) / $p
 EndOfTestFile
 
 # Make file executable
-sed -i "s/\$(echo \$EVENTS)/$EVENTS/g" wmLHEGEN_test.sh
+sed -i "s/\$EVENTS/$EVENTS/g" wmLHEGEN_test.sh
 chmod +x wmLHEGEN_test.sh
 
 if [ -e "/cvmfs/unpacked.cern.ch/registry.hub.docker.com/cmssw/el7:amd64" ]; then

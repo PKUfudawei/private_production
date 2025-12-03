@@ -77,7 +77,7 @@ echo "Filter efficiency fraction: "$(bc -l <<< "scale=10; ($producedEvents) / $p
 EndOfTestFile
 
 # Make file executable
-sed -i "s/\$(echo \$EVENTS)/$EVENTS/g" MiniAODv2_test.sh
+sed -i "s/\$EVENTS/$EVENTS/g" MiniAODv2_test.sh
 chmod +x MiniAODv2_test.sh
 
 if [ -e "/cvmfs/unpacked.cern.ch/registry.hub.docker.com/cmssw/el7:amd64" ]; then
