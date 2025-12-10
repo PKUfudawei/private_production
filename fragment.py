@@ -36,7 +36,7 @@ generator = cms.EDFilter("Pythia8ConcurrentHadronizerFilter",
             '23:mMin = 50.0',
             '23:onMode = off',
             '23:onIfAny = 1 2 3 4 5',
-            'PhaseSpace:pTHatMin = 160.', # Enforce Higgs to have high pT (approx)
+            #'PhaseSpace:pTHatMin = 160.', # Enforce Higgs to have high pT (approx)
         ),
         parameterSets = cms.vstring('pythia8CommonSettings',
             'pythia8CP5Settings',
