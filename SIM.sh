@@ -3,7 +3,6 @@
 # Binds for singularity containers
 # Mount /afs, /eos, /cvmfs, /etc/grid-security for xrootd
 export APPTAINER_BINDPATH='/afs,/cvmfs,/cvmfs/grid.cern.ch/etc/grid-security:/etc/grid-security,/eos,/etc/pki/ca-trust,/run/user,/var/run/user'
-export EVENTS=$1
 
 # Dump actual test code to a SIM_test.sh file that can be run in Singularity
 cat <<'EndOfTestFile' > SIM_test.sh
@@ -25,7 +24,7 @@ scram b
 cd ../..
 
 # cmsDriver command
-cmsDriver.py  --eventcontent RAWSIM --customise Configuration/DataProcessing/Utils.addMonitoring --datatier GEN-SIM --conditions 106X_upgrade2018_realistic_v11_L1v1 --beamspot Realistic25ns13TeVEarly2018Collision --step SIM --geometry DB:Extended --era Run2_2018 --python_filename SIM_1_cfg.py --fileout file:SIM.root --filein file:wmLHEGEN.root --number $EVENTS --number_out $EVENTS --runUnscheduled --no_exec --mc || exit $? ;
+cmsDriver.py  --eventcontent RAWSIM --customise Configuration/DataProcessing/Utils.addMonitoring --datatier GEN-SIM --conditions 106X_upgrade2018_realistic_v11_L1v1 --beamspot Realistic25ns13TeVEarly2018Collision --step SIM --geometry DB:Extended --era Run2_2018 --python_filename SIM_1_cfg.py --fileout file:SIM.root --filein file:wmLHEGEN.root --number -1 --number_out -1 --runUnscheduled --no_exec --mc || exit $? ;
 
 # Run generated config
 REPORT_NAME=SIM_report.xml
@@ -77,7 +76,6 @@ echo "Filter efficiency fraction: "$(bc -l <<< "scale=10; ($producedEvents) / $p
 EndOfTestFile
 
 # Make file executable
-sed -i "s/\$EVENTS/$EVENTS/g" SIM_test.sh
 chmod +x SIM_test.sh
 
 if [ -e "/cvmfs/unpacked.cern.ch/registry.hub.docker.com/cmssw/el7:amd64" ]; then

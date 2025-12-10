@@ -1,12 +1,12 @@
 #!/bin/bash
 
 source ./wmLHEGEN.sh $1
-source ./SIM.sh $1
+source ./SIM.sh
 for i in {1..5}; do
-    source ./DIGIPremix.sh $1 && break
+    source ./DIGIPremix.sh && break
     sleep 3
 done
-source ./HLT.sh $1
-source ./RECO.sh $1
-source ./MiniAODv2.sh $1
+source ./HLT.sh
+source ./RECO.sh
+source ./MiniAODv2.sh
 source ./customizedNanoAOD.sh

@@ -3,7 +3,6 @@
 # Binds for singularity containers
 # Mount /afs, /eos, /cvmfs, /etc/grid-security for xrootd
 export APPTAINER_BINDPATH='/afs,/cvmfs,/cvmfs/grid.cern.ch/etc/grid-security:/etc/grid-security,/eos,/etc/pki/ca-trust,/run/user,/var/run/user'
-export EVENTS=$1
 
 # Dump actual test code to a DIGIPremix_test.sh file that can be run in Singularity
 cat <<'EndOfTestFile' > DIGIPremix_test.sh
@@ -26,7 +25,7 @@ cd ../..
 
 
 # cmsDriver command
-cmsDriver.py  --eventcontent PREMIXRAW --customise Configuration/DataProcessing/Utils.addMonitoring --datatier GEN-SIM-DIGI --conditions 106X_upgrade2018_realistic_v11_L1v1 --step DIGI,DATAMIX,L1,DIGI2RAW --procModifiers premix_stage2 --geometry DB:Extended --datamix PreMix --era Run2_2018 --python_filename DIGIPremix_1_cfg.py --fileout file:DIGIPremix.root --filein file:SIM.root --number $EVENTS --number_out $EVENTS --pileup_input "dbs:/Neutrino_E-10_gun/RunIISummer20ULPrePremix-UL18_106X_upgrade2018_realistic_v11_L1v1-v2/PREMIX" --runUnscheduled --no_exec --mc || exit $? ;
+cmsDriver.py  --eventcontent PREMIXRAW --customise Configuration/DataProcessing/Utils.addMonitoring --datatier GEN-SIM-DIGI --conditions 106X_upgrade2018_realistic_v11_L1v1 --step DIGI,DATAMIX,L1,DIGI2RAW --procModifiers premix_stage2 --geometry DB:Extended --datamix PreMix --era Run2_2018 --python_filename DIGIPremix_1_cfg.py --fileout file:DIGIPremix.root --filein file:SIM.root --number -1 --number_out -1 --pileup_input "dbs:/Neutrino_E-10_gun/RunIISummer20ULPrePremix-UL18_106X_upgrade2018_realistic_v11_L1v1-v2/PREMIX" --runUnscheduled --no_exec --mc || exit $? ;
 
 # Run generated config
 REPORT_NAME=DIGIPremix_report.xml
@@ -78,7 +77,6 @@ echo "Filter efficiency fraction: "$(bc -l <<< "scale=10; ($producedEvents) / $p
 EndOfTestFile
 
 # Make file executable
-sed -i "s/\$EVENTS/$EVENTS/g" DIGIPremix_test.sh
 chmod +x DIGIPremix_test.sh
 
 if [ -e "/cvmfs/unpacked.cern.ch/registry.hub.docker.com/cmssw/el7:amd64" ]; then

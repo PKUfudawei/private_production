@@ -3,7 +3,6 @@
 # Binds for singularity containers
 # Mount /afs, /eos, /cvmfs, /etc/grid-security for xrootd
 export APPTAINER_BINDPATH='/afs,/cvmfs,/cvmfs/grid.cern.ch/etc/grid-security:/etc/grid-security,/eos,/etc/pki/ca-trust,/run/user,/var/run/user'
-export EVENTS=$1
 
 #Dump actual test code to a HLT_test.sh file that can be run in Singularity
 cat <<'EndOfTestFile' > HLT_test.sh
@@ -25,7 +24,7 @@ scram b
 cd ../..
 
 # cmsDriver command
-cmsDriver.py  --eventcontent RAWSIM --customise Configuration/DataProcessing/Utils.addMonitoring --datatier GEN-SIM-RAW --conditions 102X_upgrade2018_realistic_v15 --customise_commands 'process.source.bypassVersionCheck = cms.untracked.bool(True)' --step HLT:2018v32 --geometry DB:Extended --era Run2_2018 --python_filename HLT_1_cfg.py --fileout file:HLT.root --filein file:DIGIPremix.root --number $EVENTS --number_out $EVENTS --no_exec --mc || exit $? ;
+cmsDriver.py  --eventcontent RAWSIM --customise Configuration/DataProcessing/Utils.addMonitoring --datatier GEN-SIM-RAW --conditions 102X_upgrade2018_realistic_v15 --customise_commands 'process.source.bypassVersionCheck = cms.untracked.bool(True)' --step HLT:2018v32 --geometry DB:Extended --era Run2_2018 --python_filename HLT_1_cfg.py --fileout file:HLT.root --filein file:DIGIPremix.root --number -1 --number_out -1 --no_exec --mc || exit $? ;
 
 # Run generated config
 REPORT_NAME=HLT_report.xml
@@ -77,7 +76,6 @@ echo "Filter efficiency fraction: "$(bc -l <<< "scale=10; ($producedEvents) / $p
 EndOfTestFile
 
 # Make file executable
-sed -i "s/\$EVENTS/$EVENTS/g" HLT_test.sh
 chmod +x HLT_test.sh
 
 if [ -e "/cvmfs/unpacked.cern.ch/registry.hub.docker.com/cmssw/el7:amd64" ]; then
